@@ -1,133 +1,124 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-<meta charset="UTF-8">
-<title>仔仔年齡計算器</title>
-<style>
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-image: url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?q=80&w=1169&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
-    background-size: cover;
-    background-position: center;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .container {
-    background: rgba(255, 255, 255, 0.8);
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    width: 360px;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>年齡計算器</title>
 
-  input {
-    width: 90%;
-    padding: 10px;
-    font-size: 18px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-  }
-
-  #result {
-    margin-top: 20px;
-    background: #FAEBD7;
-    padding: 15px;
-    border-radius: 10px;
-    font-family: 'Microsoft JhengHei', sans-serif;
-  }
-
-  .dogAge {
-    font-size: 22px;
-    font-weight: bold;
-    color: #FF4500;
-  }
-
-  .humanAge {
-    margin-top: 8px;
-    font-size: 18px;
-    font-weight: bold;
-    color: #CD853F;
-  }
-
-  /* 手機：寬度 90% */
-  @media (max-width: 599px) {
-    .container {
-      width: 90%;
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #fafafa;
+      font-size: 16px;
     }
-    input, #result {
-      width: 90%;
-      margin-left: auto;
-      margin-right: auto;
-    }
-  }
 
-  /* 平板：寬度 85% */
-  @media (min-width: 600px) and (max-width: 1023px) {
-    .container {
-      width: 85%;
+    h2 {
+      margin-bottom: 20px;
+      text-align: center;
     }
-    input, #result {
-      width: 85%;
-      margin-left: auto;
-      margin-right: auto;
+
+    /* -------- 基本(桌機) -------- */
+    .input-wrapper {
+      width: 400px;
+      margin: 0 auto;
     }
-  }
-</style>
+
+    .result-box {
+      width: 400px;
+      margin: 25px auto 0;
+      font-size: 1.2rem;
+      text-align: center;
+      padding: 15px 0;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+
+    input[type="number"] {
+      width: 100%;
+      padding: 12px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    button {
+      padding: 12px;
+      font-size: 1rem;
+      background: #007BFF;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 30px;
+    }
+
+    button:hover {
+      background: #0065d1;
+    }
+
+    /* -------- 手機 (寬度 ≤ 767px) -------- */
+    @media (max-width: 767px) {
+      .input-wrapper,
+      .result-box {
+        width: 90%;
+      }
+      body {
+        font-size: 1.1rem; /* 字體等比例放大 */
+      }
+    }
+
+    /* -------- 平板 (768px~1023px) -------- */
+    @media (min-width: 768px) and (max-width: 1023px) {
+      .input-wrapper,
+      .result-box {
+        width: 85%;
+      }
+      body {
+        font-size: 1.08rem;
+      }
+    }
+  </style>
+
+  <script>
+    function calculateAge() {
+      const year = document.getElementById("birthYear").value;
+      const resultBox = document.getElementById("result");
+
+      if (!year) {
+        resultBox.textContent = "請輸入年份！";
+        return;
+      }
+
+      const currentYear = new Date().getFullYear();
+      const age = currentYear - year;
+
+      resultBox.textContent = "您的年齡是：" + age + " 歲";
+    }
+  </script>
+
 </head>
+
 <body>
-<div class="container">
-  <h1>仔仔年齡計算器</h1>
-  <p>輸入狗狗出生年份，計算牠今天的年齡</p>
 
-  <input type="month" id="birthMonth" />
+  <h2>年齡計算器</h2>
 
-  <button onclick="calculateAge()">計算年齡</button>
+  <div class="input-wrapper">
+    <div class="form-group">
+      <input id="birthYear" type="number" placeholder="請輸入出生年份">
+      <button onclick="calculateAge()">計算年齡</button>
+    </div>
+  </div>
 
-  <div id="result"></div>
-</div>
+  <div id="result" class="result-box">
+    <!-- 顯示年齡位置 -->
+  </div>
 
-<script>
-  window.onload = function () {
-    const saved = localStorage.getItem("dogBirthYM");
-    if (saved) {
-      document.getElementById("birthMonth").value = saved;
-      calculateAge();
-    }
-  };
-
-  function calculateAge() {
-    const birth = document.getElementById("birthMonth").value;
-    if (!birth) return;
-
-    localStorage.setItem("dogBirthYM", birth);
-
-    const [year, month] = birth.split("-").map(Number);
-
-    const today = new Date();
-    const cy = today.getFullYear();
-    const cm = today.getMonth() + 1;
-
-    let y = cy - year;
-    let m = cm - month;
-
-    if (m < 0) {
-      y -= 1;
-      m += 12;
-    }
-
-    let totalMonths = y * 12 + m;
-    let humanMonths = totalMonths <= 24 ? totalMonths * 12 : 24 * 12 + (totalMonths - 24) * 4;
-    let humanY = Math.floor(humanMonths / 12);
-    let humanM = humanMonths % 12;
-
-    document.getElementById("result").innerHTML = `
-      <div class="dogAge">仔仔今天是 ${y} 歲 ${m} 月</div>
-      <div class="humanAge">換算成人類年齡約為 ${humanY} 歲 ${humanM} 月</div>
-    `;
-  }
-</script>
 </body>
 </html>
