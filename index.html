@@ -1,11 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-<!--  放入這三行開始 -->
-<link rel="icon" type="image/png" href="./icon.png">
-<link rel="apple-touch-icon" href="./icon.png">
-<link rel="apple-touch-icon" sizes="180x180" href="./icon.png">
-<!--  放入這三行結束 --> 
 <meta charset="UTF-8">
 <title>仔仔年齡計算器</title>
 <style>
@@ -15,7 +10,7 @@
     background-image: url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?q=80&w=1169&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
     background-size: cover;
     background-position: center;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -27,14 +22,7 @@
     text-align: center;
     width: 360px;
   }
-  h1 {
-    font-size: 20px;
-    color: black;
-  }
-  p {
-    font-size: 16px;
-    color: black;
-  }
+
   input {
     width: 90%;
     padding: 10px;
@@ -42,16 +30,7 @@
     border-radius: 5px;
     border: 1px solid #ccc;
   }
-  button {
-    margin-top: 15px;
-    padding: 10px 20px;
-    font-size: 18px;
-    color: white;
-    background: black;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
+
   #result {
     margin-top: 20px;
     background: #FAEBD7;
@@ -59,16 +38,42 @@
     border-radius: 10px;
     font-family: 'Microsoft JhengHei', sans-serif;
   }
+
   .dogAge {
     font-size: 22px;
     font-weight: bold;
     color: #FF4500;
   }
+
   .humanAge {
     margin-top: 8px;
     font-size: 18px;
     font-weight: bold;
     color: #CD853F;
+  }
+
+  /* 手機：寬度 90% */
+  @media (max-width: 599px) {
+    .container {
+      width: 90%;
+    }
+    input, #result {
+      width: 90%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  /* 平板：寬度 85% */
+  @media (min-width: 600px) and (max-width: 1023px) {
+    .container {
+      width: 85%;
+    }
+    input, #result {
+      width: 85%;
+      margin-left: auto;
+      margin-right: auto;
+    }
   }
 </style>
 </head>
